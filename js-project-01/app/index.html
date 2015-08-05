@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" ng-app="mathQuiz">
+<head>
+<meta charset="utf-8">
+<title>My HTML File</title>
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="js/controllers.js"></script>
+<script type="text/javascript" src="bower_components/ngstorage/ngStorage.js"></script>
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+</head>
+<body ng-controller="QuestionListCtrl">
+	<p>There should be math quiz generated:</p>
+	<p>
+		Search: <input ng-model="query" >
+	</p>
+	Sort by: 
+	<select ng-model="orderProp">
+		<option value="correct">Incorrect first</option>
+		<option value="value">Lowest result first</option>
+	</select>
+	<ul	ng-repeat="question in questions | filter: query | orderBy: orderProp ">
+		<li><span>{{question.arg1}}{{question.op}}{{question.arg2}}=<input type="text" ng-model="question.value"><img ng-src="{{images[question.correct]}}"/></span></li>
+	</ul>
+	<pre>{{questions | json}}</pre>
+	<input type="button" value="Done" ng-click="validate()">
+	<input type="button" value="Reset" ng-click="reset()">
+	<ul ng-repeat="attempt in attempts">
+		<li><span>{{attempt.number}}. {{attempt.passed}}</span></li>
+	</ul>
+</body>
+</html>
